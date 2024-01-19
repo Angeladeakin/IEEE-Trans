@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charger Station DID Verification and Generation</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .verified {
+            color: green;
+        }
+
+        .unverified {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="mt-5">EV Charger Station DID Verification and Generation Simulator</h1>
+
+        <!-- Input form for DID Verification -->
+        <form id="verificationForm" class="mt-4">
+            <div class="form-group">
+                <label for="didInput">Enter your DID:</label>
+                <input type="text" class="form-control" id="didInput" placeholder="did:example:123456789abcdefghi">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="verifyDID()">Verify DID</button>
+            <button type="button" class="btn btn-info" onclick="generateDID()">Generate DID</button>
+        </form>
+
+        <!-- Verification Status -->
+        <div id="verificationStatus" class="mt-3"></div>
+
+        <!-- Generated DID -->
+        <div id="generatedDID" class="mt-3"></div>
+
+        <!-- Sample Data List -->
+        <h2 class="mt-5">Sample Charger Stations</h2>
+        <ul class="list-group mt-3">
+            <li class="list-group-item">Charger Station 1 - <span class="font-weight-bold">ID: charger-001</span></li>
+            <li class="list-group-item">Charger Station 2 - <span class="font-weight-bold">ID: charger-002</span></li>
+            <li class="list-group-item">Charger Station 3 - <span class="font-weight-bold">ID: charger-003</span></li>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript for verifying and generating the DID
+        function verifyDID() {
+            var did = document.getElementById('didInput').value;
+            var statusDiv = document.getElementById('verificationStatus');
+
+            // Mock verification function
+            function isDIDVerified(did) {
+                // For this mock, we'll just pretend that DIDs ending with 'hijklmnop' are verified
+                return did.endsWith('hijklmnop');
+            }
+
+            // Update the verification status
+            if (did && isDIDVerified(did)) {
+                statusDiv.innerHTML = `<p class="verified">DID is verified!</p>`;
+            } else {
+                statusDiv.innerHTML = `<p class="unverified">DID verification failed.</p>`;
+            }
+        }
+
+        function generateDID() {
+            var generatedDiv = document.getElementById('generatedDID');
+            var didPrefix = 'did:example:';
+            var randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+            // Ensure the generated DID ends with 'hijklmnop' for our mock verification to succeed
+            var generatedDID = didPrefix + randomString + 'hijklmnop';
+
+            // Display the generated DID
+            generatedDiv.innerHTML = `<p>Your generated DID: <span class="font-weight-bold">${generatedDID}</span></p>`;
+
+            // Automatically populate the DID input for convenience
+            document.getElementById('didInput').value = generatedDID;
+        }
+    </script>
+</body>
+
+</html>

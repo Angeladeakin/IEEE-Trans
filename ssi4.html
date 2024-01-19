@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EV Charger Blockchain Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #charging-stations {
+            margin-top: 20px;
+        }
+
+        .station {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>EV Charger Blockchain Platform Simulation</h1>
+
+    <div>
+        <label for="userWalletAddress">Your Wallet Address:</label>
+        <input type="text" id="userWalletAddress" placeholder="Enter your wallet address">
+    </div>
+
+    <div id="charging-stations">
+        <!-- Dynamically populated with JavaScript -->
+    </div>
+
+    <script>
+        // Simulated Blockchain
+        let blockchain = [];
+
+        // Simulated Charging Stations
+        let chargingStations = [
+            { id: 1, name: 'Station A', pricePerKwh: 0.25 },
+            { id: 2, name: 'Station B', pricePerKwh: 0.20 },
+            { id: 3, name: 'Station C', pricePerKwh: 0.30 },
+        ];
+
+        function initiateCharging(walletAddress, stationId, kwh) {
+            if (!walletAddress) {
+                alert('Please enter your wallet address.');
+                return;
+            }
+
+            // Calculate cost
+            const station = chargingStations.find(s => s.id === stationId);
+            const cost = station.pricePerKwh * kwh;
+
+            // Simulate transaction on the blockchain
+            let transaction = {
+                transactionId: generateTransactionId(),
+                from: walletAddress,
+                to: `station-${stationId}`,
+                amount: cost,
+                kwh: kwh,
+                timestamp: new Date().toISOString(),
+            };
+
+            // Add to blockchain
+            blockchain.push(transaction);
+
+            // Simulate adding to the next block
+            let block = {
+                blockNumber: blockchain.length,
+                transactions: [transaction],
+                timestamp: new Date().toISOString(),
+            };
+
+            alert(`Transaction Successful!
+Transaction ID: ${transaction.transactionId}
+Amount: $${cost.toFixed(2)}
+Charged: ${kwh} kWh
+Timestamp: ${transaction.timestamp}
+Transaction added to block number ${block.blockNumber}`);
+
+            console.log(blockchain); // For demonstration purposes
+        }
+
+        function generateTransactionId() {
+            // This is a simple simulation of a transaction ID. In reality, this would be a hash of the transaction contents.
+            return Math.random().toString(36).substr(2, 9);
+        }
+
+        function renderStations() {
+            const stationsContainer = document.getElementById('charging-stations');
+            chargingStations.forEach(station => {
+                let div = document.createElement('div');
+                div.className = 'station';
+                div.innerHTML = `
+                <strong>${station.name}</strong> - Price: $${station.pricePerKwh} per kWh
+                <button onclick="initiateCharging(document.getElementById('userWalletAddress').value, ${station.id}, 5)">
+                    Charge 5kWh
+                </button>
+            `;
+                stationsContainer.appendChild(div);
+            });
+        }
+
+        // Render charging stations on page load
+        window.onload = renderStations;
+    </script>
+
+</body>
+
+</html>
