@@ -27,4 +27,4 @@ This README file provides instructions on how to open and view the HTML document
 
 - **Editing HTML**: To edit the HTML document, use a text editor like Notepad, Visual Studio Code, Sublime Text, or any other preferred text editor.
 - **Troubleshooting**: If the HTML file doesn't display correctly, check for errors in the HTML code or ensure that the file extension is correct.
-- **Support**: For further assistance, please contact [Support Contact Information].
+- **Support**: For further assistance, please contact [a.an@deakin.edu.au].
